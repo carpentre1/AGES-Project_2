@@ -17,20 +17,20 @@ public class Controller : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0)
+	/*	if(Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0)
         {
-            hInput = -Input.GetAxis("Horizontal");
+            hInput = Input.GetAxisRaw("Horizontal");
         }
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("Vertical") < 0)
         {
-            vInput = Input.GetAxis("Vertical");
+            vInput = Input.GetAxisRaw("Vertical");
         }
-        ballScript.RotateBall(hInput, vInput);
+        ballScript.RotateBall(hInput, vInput);*/
 
         if (Input.GetButtonDown("P1_A"))//if they press the A button
         {
             float intensity = Mathf.Max(hInput, vInput);//the force to putt the ball, based on how tilted the analog stick was
-            ballScript.Putt(intensity);
+            //ballScript.Putt(intensity);
         }
     }
 }
