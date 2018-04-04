@@ -23,7 +23,6 @@ public class Respawn : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("something");
         if (other.tag == "Player")
         {
             Debug.Log("player");

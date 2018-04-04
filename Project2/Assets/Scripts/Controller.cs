@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
-    public GolfBall ballScript;
     public GameObject golfBall;
 
     float hInput = 0;
     float vInput = 0;
+
+    int numPlayers = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -17,20 +18,68 @@ public class Controller : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	/*	if(Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0)
-        {
-            hInput = Input.GetAxisRaw("Horizontal");
-        }
-        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("Vertical") < 0)
-        {
-            vInput = Input.GetAxisRaw("Vertical");
-        }
-        ballScript.RotateBall(hInput, vInput);*/
 
         if (Input.GetButtonDown("P1_A"))//if they press the A button
         {
             float intensity = Mathf.Max(hInput, vInput);//the force to putt the ball, based on how tilted the analog stick was
             //ballScript.Putt(intensity);
+        }
+    }
+    public bool B_Down()
+    {
+        if(numPlayers == 2)
+        {
+            if (Input.GetButton("P2_B"))
+            {
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (Input.GetButton("P1_B") || Input.GetButton("P2_B"))
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
+    public bool Y_Down()
+    {
+        if (numPlayers == 2)
+        {
+            if (Input.GetButton("P2_Y"))
+            {
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (Input.GetButton("P1_Y") || Input.GetButton("P2_Y"))
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
+    public bool X_Down()
+    {
+        if (numPlayers == 2)
+        {
+            if (Input.GetButton("P2_X"))
+            {
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (Input.GetButton("P1_X") || Input.GetButton("P2_X"))
+            {
+                return true;
+            }
+            else return false;
         }
     }
 }

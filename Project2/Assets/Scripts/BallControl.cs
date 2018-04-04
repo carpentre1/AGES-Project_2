@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,24 +28,43 @@ public class BallControl : MonoBehaviour
     private float xInput;
     private float yInput;
     Vector3 aimDirection;
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
 
     public int currentLevel = 1;
     public Vector3 respawnPosition;
 
+    [Tooltip("The farthest down the ball can fall before resetting.")]
+    [SerializeField]
+    float minY = -10;
+
     // Use this for initialization
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         respawnPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckBallPosition();
         GetAimInput();
         UpdateAimIndicator();
         Putt();
+    }
+
+    private void CheckBallPosition()
+    {
+        if(transform.position.y < -10)
+        {
+            ResetBall();
+        }
+    }
+
+    private void ResetBall()
+    {
+        rb.velocity = new Vector3(0,0,0);
+        transform.position = respawnPosition;
     }
 
     /// <summary>
@@ -90,10 +110,10 @@ public class BallControl : MonoBehaviour
         if (Input.GetButtonDown("P1_A"))
         {
             float force = puttMaxForce * aimDirection.magnitude;
-            rigidbody.velocity = new Vector3(0, 0, 0);
+            rb.velocity = new Vector3(0, 0, 0);
             // We can add force in the direction of our pivotpoint's forward, because
             // we are rotating it based on the aim input every frame.
-            rigidbody.AddForce(pivotPoint.transform.forward * force, ForceMode.Impulse);
+            rb.AddForce(pivotPoint.transform.forward * force, ForceMode.Impulse);
         }
     }
 }
