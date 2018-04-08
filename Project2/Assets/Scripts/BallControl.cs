@@ -23,7 +23,7 @@ public class BallControl : MonoBehaviour
 
     [Tooltip("Fully extending the analog stick will achieve max force.")]
     [SerializeField]
-    private float puttMaxForce = 10f;
+    private float puttMaxForce = 20f;
 
     private float xInput;
     private float yInput;
@@ -32,6 +32,8 @@ public class BallControl : MonoBehaviour
 
     public int currentLevel = 1;
     public Vector3 respawnPosition;
+
+    List<GameObject> colliders = new List<GameObject>();
 
     [Tooltip("The farthest down the ball can fall before resetting.")]
     [SerializeField]
@@ -55,16 +57,31 @@ public class BallControl : MonoBehaviour
 
     private void CheckBallPosition()
     {
-        if(transform.position.y < -10)
+        if(transform.position.y < minY)
         {
             ResetBall();
         }
     }
 
-    private void ResetBall()
+    public void ResetBall()
     {
         rb.velocity = new Vector3(0,0,0);
         transform.position = respawnPosition;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            colliders.Add(collision.gameObject);
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            colliders.Remove(collision.gameObject);
+        }
     }
 
     /// <summary>
@@ -107,6 +124,7 @@ public class BallControl : MonoBehaviour
         // the magnitude will top out around 1. Which is nice for "100%" force...
         // If we push the analog stick half way, it should be around mangitude 0.5,
         // or 50% force.
+        if(colliders.Count == 0) { return; }//can't putt if not on the ground
         if (Input.GetButtonDown("P1_A"))
         {
             float force = puttMaxForce * aimDirection.magnitude;

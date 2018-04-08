@@ -14,6 +14,8 @@ public class Door : MonoBehaviour {
     bool doorClosing = false;
     bool doorOpen = false;
 
+    public int level = 1;
+
     float openingSpeed = .05f;
     float stayOpenDuration = 2;
     float totalDistance = 10;
@@ -30,6 +32,10 @@ public class Door : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(level != golfBallScript.currentLevel)
+        {
+            return;//don't do anything if the player isn't on this level
+        }
         if (controllerScript.Y_Down())
         {
             OpenDoor();

@@ -4,25 +4,42 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
-    public GameObject golfBall;
+    GameObject golfBall;
+    BallControl golfBallScript;
 
     float hInput = 0;
     float vInput = 0;
+
+    public float LTInput = 0;
 
     int numPlayers = 1;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        golfBall = GameObject.FindGameObjectWithTag("Player");
+        golfBallScript = golfBall.GetComponent<BallControl>();
+    }
+
+    // Update is called once per frame
+    void Update() {
 
         if (Input.GetButtonDown("P1_A"))//if they press the A button
         {
             float intensity = Mathf.Max(hInput, vInput);//the force to putt the ball, based on how tilted the analog stick was
             //ballScript.Putt(intensity);
+        }
+        if (Input.GetButtonDown("Reset"))
+        {
+            golfBallScript.ResetBall();
+        }
+        if (numPlayers == 1)
+        {
+            LTInput = Mathf.Max(Input.GetAxis("P1LT"), Input.GetAxis("P2LT"));
+            //Debug.Log(LTInput);
+        }
+        else if (numPlayers == 2)
+        {
+            LTInput = Input.GetAxis("P2LT");
         }
     }
     public bool B_Down()
