@@ -33,6 +33,9 @@ public class BallControl : MonoBehaviour
     public int currentLevel = 1;
     public Vector3 respawnPosition;
 
+    [Tooltip("How fast upwards the ball is allowed to move.")]
+    public float yVelocityLimit = 10;
+
     List<GameObject> colliders = new List<GameObject>();
 
     [Tooltip("The farthest down the ball can fall before resetting.")]
@@ -50,9 +53,19 @@ public class BallControl : MonoBehaviour
     void Update()
     {
         CheckBallPosition();
+        LimitVelocity();
         GetAimInput();
         UpdateAimIndicator();
         Putt();
+    }
+
+    private void LimitVelocity()
+    {
+        if (rb.velocity.y > 10)
+        {
+            Debug.Log("limiting");
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, 10);
+        }
     }
 
     private void CheckBallPosition()
