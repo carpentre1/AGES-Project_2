@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OnscreenButtons : MonoBehaviour {
-    Transform theChild;
-	// Use this for initialization
+    public Transform myObject;
+    Vector3 originalPos;
+    Vector3 deltaPos;
+    // Use this for initialization
+
+    Vector3 origScale;
 	void Start () {
-		foreach(Transform child in transform)
-        {
-            if (child.name.Contains("MovingPlatform"))
-            {
-                theChild = child;
-            }
-        }
+        deltaPos = myObject.position - transform.position;
 	}
 	
 	// Update is called once per frame
-	void LateUpdate () {
-        if(theChild)
+	void Update () {
+        //deltaPos = myObject.position - originalPos;
+        if (myObject)
         {
-            transform.position = theChild.transform.position;
+            transform.position = new Vector3(myObject.position.x + deltaPos.x, myObject.position.y + deltaPos.y, myObject.position.z + deltaPos.z);
         }
 	}
 }

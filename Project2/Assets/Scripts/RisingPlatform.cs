@@ -14,6 +14,15 @@ public class RisingPlatform : MonoBehaviour {
 
     List<GameObject> colliders = new List<GameObject>();
 
+    float oldLTInput;
+    float deltaLTInput;
+    float deltaScale;
+
+    public float level = 1;
+
+    [Tooltip("How quickly the platform rises and falls. 0.1 to 0.5 are good values.")]
+    public float speed = .5f;
+
     [Tooltip("How tall the platform should be when fully extended.")]
     public float lengthMultiplier = 4;
     [Tooltip("The minimum height of the platform when not extended at all.")]
@@ -36,12 +45,33 @@ public class RisingPlatform : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        //LTInput is 0 when left trigger is not touched, and goes up to 1 when pressed all the way down
-        pivotPoint.localScale = new Vector3(pivotPoint.localScale.x, Mathf.Max(minSize, controllerScript.LTInput * lengthMultiplier), pivotPoint.localScale.z);
-        if(colliders.Count != 0)
+        if(level != golfBallScript.currentLevel)
         {
-            golfBall.GetComponent<Rigidbody>().AddForce(transform.up * 5, ForceMode.Impulse);
+            return;
         }
+        //make the platform push out in increments
+        deltaLTInput = controllerScript.LTInput - oldLTInput;
+        //LTInput is 0 when left trigger is not touched, and goes up to 1 when pressed all the way down
+        //pivotPoint.localScale = new Vector3(pivotPoint.localScale.x, Mathf.Max(minSize, controllerScript.LTInput * lengthMultiplier), pivotPoint.localScale.z);
+        deltaScale = deltaLTInput * lengthMultiplier;
+        if(pivotPoint.localScale.y < controllerScript.LTInput * lengthMultiplier)
+        {
+            pivotPoint.localScale = new Vector3(pivotPoint.localScale.x, pivotPoint.localScale.y + speed, pivotPoint.localScale.z);
+
+        }
+        if (pivotPoint.localScale.y > controllerScript.LTInput * lengthMultiplier)
+        {
+            pivotPoint.localScale = new Vector3(pivotPoint.localScale.x, Mathf.Max(minSize, pivotPoint.localScale.y - speed), pivotPoint.localScale.z);
+
+        }
+
+        if (colliders.Count != 0)
+        {
+            golfBall.GetComponent<Rigidbody>().AddForce(transform.up * 5 * deltaLTInput, ForceMode.Impulse);
+            if(deltaLTInput > 0) { Debug.Log(deltaLTInput); }
+        }
+        
+        oldLTInput = controllerScript.LTInput;
     }
 
     private void OnCollisionEnter(Collision collision)
