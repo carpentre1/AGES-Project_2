@@ -30,8 +30,9 @@ public class BallControl : MonoBehaviour
     Vector3 aimDirection;
     private Rigidbody rb;
 
-    public int currentLevel = 1;
+    public int currentLevel = 0;
     public Vector3 respawnPosition;
+    public GameObject beginPoint;
 
     [Tooltip("How fast upwards the ball is allowed to move.")]
     public float yVelocityLimit = 10;
@@ -63,7 +64,6 @@ public class BallControl : MonoBehaviour
     {
         if (rb.velocity.y > 10)
         {
-            Debug.Log("limiting");
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, 10);
         }
     }
@@ -79,6 +79,13 @@ public class BallControl : MonoBehaviour
     public void ResetBall()
     {
         rb.velocity = new Vector3(0,0,0);
+        transform.position = respawnPosition;
+    }
+    public void ReturnToSelect()
+    {
+        rb.velocity = new Vector3(0, 0, 0);
+        respawnPosition = beginPoint.transform.position;
+        currentLevel = 0;
         transform.position = respawnPosition;
     }
 

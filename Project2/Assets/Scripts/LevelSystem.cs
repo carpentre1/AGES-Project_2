@@ -7,11 +7,14 @@ public class LevelSystem : MonoBehaviour {
     GameObject golfBall;
     BallControl golfBallScript;
 
+    GameObject levelManager;
+    LevelManager levelManagerScript;
+
+    public GameObject flag;
+
     [Tooltip("Attach the starting point of the next level.")]
     public GameObject nextLevel;
 
-    [Tooltip("If it's not the start point of the level, it's the finish point.")]
-    public bool isLevelStart = true;
 
     public int level = 1;//change this value in the editor
 
@@ -19,22 +22,24 @@ public class LevelSystem : MonoBehaviour {
 	void Start () {
         golfBall = GameObject.FindGameObjectWithTag("Player");
         golfBallScript = golfBall.GetComponent<BallControl>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown("z"))
-        {
-            Debug_SkipLevel();
-        }
+
+        levelManager = GameObject.FindGameObjectWithTag("LevelManager");
+        levelManagerScript = levelManager.GetComponent<LevelManager>();
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!isLevelStart)//if they hit the finish point
+        if(name.Contains("End"))//if they enter a level end hole, send them back to select
         {
             if (other.tag == "Player")
             {
+                golfBallScript.respawnPosition = levelManagerScript.beginPoint.transform.position;
+                golfBallScript.ResetBall();
+
+                //update flag
+
+                golfBallScript.currentLevel = 0;
+                /*
                 golfBallScript.currentLevel++;
                 if(!nextLevel)//if there are no more levels after this one
                 {
@@ -45,27 +50,26 @@ public class LevelSystem : MonoBehaviour {
                 }
                 golfBallScript.respawnPosition = nextLevel.transform.position;
                 golfBallScript.ResetBall();
+                */
                 
             }
         }
-    }
-
-    void Debug_SkipLevel()//level skipper for testing
-    {
-        if (level == golfBallScript.currentLevel && !isLevelStart)
+        if (name.Contains("Select"))//if they enter a level select hole, send them to that level's start
         {
-            Debug.Log(this.name + " " + level + " " + isLevelStart + " " + nextLevel);
-            golfBallScript.currentLevel++;
-            if (!nextLevel)
+            if (other.tag == "Player")
             {
-                golfBallScript.currentLevel = 1;
-                golfBallScript.respawnPosition = new Vector3(2, 1, -3.75f);
+                foreach(GameObject newLevel in levelManagerScript.levelStarts)
+                {
+                    if (newLevel.name.Contains(level.ToString()))
+                    {
+                        nextLevel = newLevel;
+                    }
+                }
+                golfBallScript.respawnPosition = nextLevel.transform.position;
                 golfBallScript.ResetBall();
-                return;
+                golfBallScript.currentLevel = level;
+
             }
-            golfBallScript.respawnPosition = nextLevel.transform.position;
-            golfBallScript.ResetBall();
-            return;
         }
     }
 }

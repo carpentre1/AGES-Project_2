@@ -32,10 +32,13 @@ public class Controller : MonoBehaviour {
         {
             golfBallScript.ResetBall();
         }
+        if (Input.GetButtonDown("Start"))
+        {
+            golfBallScript.ReturnToSelect();
+        }
         if (numPlayers == 1)
         {
             LTInput = Mathf.Max(Input.GetAxis("P1LT"), Input.GetAxis("P2LT"));
-            //Debug.Log(LTInput);
         }
         else if (numPlayers == 2)
         {

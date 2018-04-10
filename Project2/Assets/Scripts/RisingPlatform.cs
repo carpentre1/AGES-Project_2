@@ -68,7 +68,6 @@ public class RisingPlatform : MonoBehaviour {
         if (colliders.Count != 0)
         {
             golfBall.GetComponent<Rigidbody>().AddForce(transform.up * 5 * deltaLTInput, ForceMode.Impulse);
-            if(deltaLTInput > 0) { Debug.Log(deltaLTInput); }
         }
         
         oldLTInput = controllerScript.LTInput;
