@@ -18,7 +18,7 @@ public class Door : MonoBehaviour {
 
     float openingSpeed = .05f;
     float stayOpenDuration = 2;
-    float totalDistance = 10;
+    public float totalDistance = 10;
     float doorOpenMagnitude = 1;
 
     // Use this for initialization

@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject beginPoint;
 
     public List<GameObject> levelStarts = new List<GameObject>();
+    public List<GameObject> levelSelectFlags = new List<GameObject>();
 
     // Use this for initialization
     void Start () {
@@ -21,4 +22,15 @@ public class LevelManager : MonoBehaviour {
 	void Update () {
 		
 	}
+    public void UpdateLevelCompletion(int level)
+    {
+        foreach(GameObject flag in levelSelectFlags)
+        {
+            if(flag.name.Contains(level.ToString()))
+            {
+                flag.GetComponent<Renderer>().material.color = Color.green;
+                Debug.Log("changed color");
+            }
+        }
+    }
 }
