@@ -33,11 +33,12 @@ public class LevelSystem : MonoBehaviour {
         {
             if (other.tag == "Player")
             {
+
+
                 golfBallScript.respawnPosition = levelManagerScript.beginPoint.transform.position;
                 golfBallScript.ResetBall();
 
                 levelManagerScript.UpdateLevelCompletion(golfBallScript.currentLevel);
-                //update flag
 
                 golfBallScript.currentLevel = 0;
                 /*
