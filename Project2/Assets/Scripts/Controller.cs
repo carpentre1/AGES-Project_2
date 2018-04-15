@@ -10,6 +10,9 @@ public class Controller : MonoBehaviour {
     float hInput = 0;
     float vInput = 0;
 
+    public float rightAnalogX;
+    public float rightAnalogY;
+
     public float LTInput = 0;
 
     int numPlayers = 1;
@@ -39,10 +42,15 @@ public class Controller : MonoBehaviour {
         if (numPlayers == 1)
         {
             LTInput = Mathf.Max(Input.GetAxis("P1LT"), Input.GetAxis("P2LT"));
+            rightAnalogX = Input.GetAxis("P1RightHor");
+            rightAnalogY = -Input.GetAxis("P1RightVert");
+            Debug.Log(rightAnalogX);
         }
         else if (numPlayers == 2)
         {
             LTInput = Input.GetAxis("P2LT");
+            rightAnalogX = Input.GetAxis("P2RightHor");
+            rightAnalogY = -Input.GetAxis("P2RightVert");
         }
     }
     public bool B_Down()
