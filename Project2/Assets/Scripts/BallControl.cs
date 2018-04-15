@@ -34,6 +34,13 @@ public class BallControl : MonoBehaviour
     public Vector3 respawnPosition;
     public GameObject beginPoint;
 
+    public AudioSource SFX_golfHeavy1;
+    public AudioSource SFX_golfMedium1;
+    public AudioSource SFX_golf1;
+    public AudioSource SFX_golf2;
+    public AudioSource SFX_golf3;
+    public AudioSource SFX_whoosh;
+
     [Tooltip("How fast upwards the ball is allowed to move.")]
     public float yVelocityLimit = 10;
 
@@ -80,6 +87,7 @@ public class BallControl : MonoBehaviour
     {
         rb.velocity = new Vector3(0,0,0);
         transform.position = respawnPosition;
+        SFX_whoosh.Play();
     }
     public void ReturnToSelect()
     {
@@ -87,6 +95,7 @@ public class BallControl : MonoBehaviour
         respawnPosition = beginPoint.transform.position;
         currentLevel = 0;
         transform.position = respawnPosition;
+        SFX_whoosh.Play();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -152,6 +161,19 @@ public class BallControl : MonoBehaviour
             // We can add force in the direction of our pivotpoint's forward, because
             // we are rotating it based on the aim input every frame.
             rb.AddForce(pivotPoint.transform.forward * force, ForceMode.Impulse);
+
+            if(force < puttMaxForce * .6)
+            {
+                SFX_golfMedium1.Play();
+            }
+            if(force >= puttMaxForce * .6 && force < puttMaxForce * .9)
+            {
+                SFX_golf1.Play();
+            }
+            if(force >= puttMaxForce * .9)
+            {
+                SFX_golfHeavy1.Play();
+            }
         }
     }
 }

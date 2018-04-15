@@ -25,6 +25,7 @@ public class LevelSystem : MonoBehaviour {
 
         levelManager = GameObject.FindGameObjectWithTag("LevelManager");
         levelManagerScript = levelManager.GetComponent<LevelManager>();
+
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -33,26 +34,14 @@ public class LevelSystem : MonoBehaviour {
         {
             if (other.tag == "Player")
             {
-
-
+                levelManagerScript.SFX_ballInHole.Play();
                 golfBallScript.respawnPosition = levelManagerScript.beginPoint.transform.position;
                 golfBallScript.ResetBall();
 
                 levelManagerScript.UpdateLevelCompletion(golfBallScript.currentLevel);
+                //levelManagerScript.SFX_fanfare1.Play();
 
                 golfBallScript.currentLevel = 0;
-                /*
-                golfBallScript.currentLevel++;
-                if(!nextLevel)//if there are no more levels after this one
-                {
-                    golfBallScript.currentLevel = 1;//start them over at the beginning
-                    golfBallScript.respawnPosition = new Vector3(2, 1, -3.75f);//the starting point for level 1
-                    golfBallScript.ResetBall();
-                    return;
-                }
-                golfBallScript.respawnPosition = nextLevel.transform.position;
-                golfBallScript.ResetBall();
-                */
                 
             }
         }
@@ -67,6 +56,7 @@ public class LevelSystem : MonoBehaviour {
                         nextLevel = newLevel;
                     }
                 }
+                levelManagerScript.SFX_whoosh.Play();
                 golfBallScript.respawnPosition = nextLevel.transform.position;
                 golfBallScript.ResetBall();
                 golfBallScript.currentLevel = level;

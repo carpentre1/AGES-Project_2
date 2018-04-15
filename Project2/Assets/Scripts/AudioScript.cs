@@ -23,7 +23,7 @@ public class AudioScript : MonoBehaviour {
 	void Update () {
 		
 	}
-    void PlayAudio(AudioSource audio)
+    public void PlayAudio(AudioSource audio)
     {
         audio.Play();
     }

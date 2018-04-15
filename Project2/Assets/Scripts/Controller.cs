@@ -14,6 +14,7 @@ public class Controller : MonoBehaviour {
     public float rightAnalogY;
 
     public float LTInput = 0;
+    public float RTInput = 0;
 
     int numPlayers = 1;
 
@@ -21,6 +22,7 @@ public class Controller : MonoBehaviour {
 	void Start () {
         golfBall = GameObject.FindGameObjectWithTag("Player");
         golfBallScript = golfBall.GetComponent<BallControl>();
+        numPlayers = PlayerPrefs.GetInt("Players");
     }
 
     // Update is called once per frame
@@ -41,7 +43,8 @@ public class Controller : MonoBehaviour {
         }
         if (numPlayers == 1)
         {
-            LTInput = Mathf.Max(Input.GetAxis("P1LT"), Input.GetAxis("P2LT"));
+            LTInput = Input.GetAxis("P1LT");
+            RTInput = Input.GetAxis("P1RT");
             rightAnalogX = Input.GetAxis("P1RightHor");
             rightAnalogY = -Input.GetAxis("P1RightVert");
             Debug.Log(rightAnalogX);
@@ -49,6 +52,7 @@ public class Controller : MonoBehaviour {
         else if (numPlayers == 2)
         {
             LTInput = Input.GetAxis("P2LT");
+            RTInput = Input.GetAxis("P2RT");
             rightAnalogX = Input.GetAxis("P2RightHor");
             rightAnalogY = -Input.GetAxis("P2RightVert");
         }

@@ -18,7 +18,7 @@ public class Title : MonoBehaviour {
 
     private void OnDestroy()
     {
-        PlayerPrefs.SetInt("Players", 1);
+        //PlayerPrefs.SetInt("Players", 1);
     }
 
     // Update is called once per frame

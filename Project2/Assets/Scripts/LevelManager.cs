@@ -12,6 +12,10 @@ public class LevelManager : MonoBehaviour {
     public List<GameObject> levelStarts = new List<GameObject>();
     public List<GameObject> levelSelectFlags = new List<GameObject>();
 
+    public AudioSource SFX_ballInHole;
+    public AudioSource SFX_whoosh;
+    public AudioSource SFX_fanfare1;
+
     // Use this for initialization
     void Start () {
         golfBall = GameObject.FindGameObjectWithTag("Player");
@@ -29,7 +33,6 @@ public class LevelManager : MonoBehaviour {
             if(flag.name.Contains(level.ToString()))
             {
                 flag.GetComponent<Renderer>().material.color = Color.green;
-                Debug.Log("changed color");
             }
         }
     }

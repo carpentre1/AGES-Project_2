@@ -10,7 +10,7 @@ public class OnscreenButtons : MonoBehaviour {
 
     Vector3 origScale;
 	void Start () {
-        deltaPos = myObject.position - transform.position;
+        //deltaPos = myObject.position - transform.position;
 	}
 	
 	// Update is called once per frame
