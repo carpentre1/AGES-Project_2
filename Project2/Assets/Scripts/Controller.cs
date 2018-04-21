@@ -7,6 +7,9 @@ public class Controller : MonoBehaviour {
     GameObject golfBall;
     BallControl golfBallScript;
 
+    public GameObject pauseManager;
+    PauseMenu pauseMenuScript;
+
     float hInput = 0;
     float vInput = 0;
 
@@ -22,12 +25,23 @@ public class Controller : MonoBehaviour {
 	void Start () {
         golfBall = GameObject.FindGameObjectWithTag("Player");
         golfBallScript = golfBall.GetComponent<BallControl>();
+
+        pauseMenuScript = pauseManager.GetComponent<PauseMenu>();
+
         numPlayers = PlayerPrefs.GetInt("Players");
     }
 
     // Update is called once per frame
     void Update() {
+        if(pauseMenuScript.isPaused)
+        {
+            return;
+        }
 
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            //Application.Quit();
+        }
         if (Input.GetButtonDown("P1_A"))//if they press the A button
         {
             float intensity = Mathf.Max(hInput, vInput);//the force to putt the ball, based on how tilted the analog stick was
@@ -39,7 +53,7 @@ public class Controller : MonoBehaviour {
         }
         if (Input.GetButtonDown("Start"))
         {
-            golfBallScript.ReturnToSelect();
+            //golfBallScript.ReturnToSelect();
         }
         if (numPlayers == 1)
         {
@@ -47,7 +61,6 @@ public class Controller : MonoBehaviour {
             RTInput = Input.GetAxis("P1RT");
             rightAnalogX = Input.GetAxis("P1RightHor");
             rightAnalogY = -Input.GetAxis("P1RightVert");
-            Debug.Log(rightAnalogX);
         }
         else if (numPlayers == 2)
         {

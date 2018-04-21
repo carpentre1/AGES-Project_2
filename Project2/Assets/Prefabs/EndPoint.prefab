@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 114842771870944168}
   - component: {fileID: 64963629785806838}
   m_Layer: 0
-  m_Name: Flag
+  m_Name: Flag1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1850739706821558}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 2, y: -1.76, z: 15.45}
+  m_LocalPosition: {x: -13.01, y: -2.15, z: 18.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4727498284617810}
@@ -156,7 +156,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 709abc4d9d5a81446963753fc56f976b, type: 2}
+  - {fileID: 1241579121, guid: 85e001988817e054395cfa038fa82791, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11529,6 +11529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc7d7a36edf5594a9303afccc8972a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flag: {fileID: 1821242354874534}
   nextLevel: {fileID: 0}
-  isLevelStart: 0
-  level: 3
+  level: 1

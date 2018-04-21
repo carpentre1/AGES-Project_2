@@ -34,6 +34,9 @@ public class BallControl : MonoBehaviour
     public Vector3 respawnPosition;
     public GameObject beginPoint;
 
+    public GameObject pauseManager;
+    PauseMenu pauseMenuScript;
+
     public AudioSource SFX_golfHeavy1;
     public AudioSource SFX_golfMedium1;
     public AudioSource SFX_golf1;
@@ -55,11 +58,16 @@ public class BallControl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         respawnPosition = transform.position;
+        pauseMenuScript = pauseManager.GetComponent<PauseMenu>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(pauseMenuScript.isPaused)
+        {
+            return;
+        }
         CheckBallPosition();
         LimitVelocity();
         GetAimInput();
@@ -139,8 +147,10 @@ public class BallControl : MonoBehaviour
         // The scale will indicate the strength of the putt.
         if (aimDirection.magnitude > deadzone)
         {
-            pivotPoint.rotation = Quaternion.LookRotation(aimDirection, transform.up);
-            pivotPoint.localScale = new Vector3(pivotPoint.localScale.x, pivotPoint.localScale.y, aimDirection.magnitude*2);
+            pivotPoint.rotation = Quaternion.LookRotation(aimDirection, Vector3.up);
+            float averagedMagnitude = Mathf.Min(aimDirection.magnitude * 2, 2);
+            pivotPoint.localScale = new Vector3(pivotPoint.localScale.x, pivotPoint.localScale.y, averagedMagnitude);
+            pivotPoint.transform.position = transform.position;
         }
         else
         {

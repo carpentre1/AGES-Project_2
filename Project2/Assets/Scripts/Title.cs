@@ -11,6 +11,8 @@ public class Title : MonoBehaviour {
     public GameObject mainMenu;
     public Button start2;
 
+    bool onAudioSlider = false;
+
     // Use this for initialization
     void Start () {
         start2.Select();
@@ -35,11 +37,25 @@ public class Title : MonoBehaviour {
             creditsPanel.SetActive(false);
             audioPanel.SetActive(false);
             mainMenu.SetActive(true);
+            start2.Select();
+            onAudioSlider = false;
+        }
+        if(onAudioSlider && Input.GetAxis("HorizontalUI") > .4f)
+        {
+            audioSlider.value += .01f;
+        }
+        if (onAudioSlider && Input.GetAxis("HorizontalUI") < -.4f)
+        {
+            audioSlider.value -= .01f;
         }
     }
 
     public void OnValueChanged()
     {
         AudioListener.volume = audioSlider.value;
+    }
+    public void SelectSlider()
+    {
+        onAudioSlider = true;
     }
 }

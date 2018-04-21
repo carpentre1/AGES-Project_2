@@ -34,7 +34,6 @@ public class Platform : MonoBehaviour
         //cc = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
         yPos = transform.position.y;
-        Debug.Log(transform.forward);
     }
 
     // Update is called once per frame
