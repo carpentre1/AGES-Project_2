@@ -1,5 +1,5 @@
-WebGL
-a13186d2d30a59a98f6bb9c5734067dc Assembly-CSharp.dll:.LevelManager
+WindowsStandalone
+dc08323ab1c379f6567a0e37636e6fe3 Assembly-CSharp.dll:.LevelManager
 dc07d7ad69b399a46e92c483bf1c04ca UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 9f07aaefd0255462bb6e4f9e5da6b2d4 UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -118,6 +118,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 182ce8304343d6b703f0595dfe2fd8b1 Assembly-CSharp.dll:.AudioScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:ProBuilder2.Examples.HueCube
 c72abe581684c626be1a5300ca847bcc Assembly-CSharp.dll:.CameraScript
+c428d1481556f38bc794ad4ec70bf5b0 Assembly-CSharp.dll:.PauseMenu
 98106ee8d1789d1763e5aaef37edc6aa Assembly-CSharp.dll:.BallControl
 a13e348db57cdb225ef648cd7f959981 ProBuilderCore-Unity5.dll:ProBuilder2.Common.pb_BezierShape
 d65f8e166eb4df1e46eb9eaa8ee261c1 ProBuilderCore-Unity5.dll:ProBuilder2.Common.pb_ColorPalette
@@ -162,4 +163,4 @@ a67f8c052b6c7427228d2e0d36073477 Assembly-CSharp.dll:.OnscreenButtons
 9471b2bf079e92185fbf1130af0a9438 Assembly-CSharp.dll:.Platform
 32dcc1dca94294515dfea07e896e1a84 Assembly-CSharp.dll:ProBuilder2.Examples.RuntimeEdit
 22e03378bd05a925afca22f1219f16a3 Assembly-CSharp.dll:.RisingPlatform
-c428d1481556f38bc794ad4ec70bf5b0 Assembly-CSharp.dll:.PauseMenu
+b5b7c02c93ff2aa4d3e6c859649463da Assembly-UnityScript.dll:.TimedObjectDestructor

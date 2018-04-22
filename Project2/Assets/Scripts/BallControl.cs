@@ -25,6 +25,9 @@ public class BallControl : MonoBehaviour
     [SerializeField]
     private float puttMaxForce = 20f;
 
+    GameObject controller;
+    Controller controllerScript;
+
     private float xInput;
     private float yInput;
     Vector3 aimDirection;
@@ -47,6 +50,9 @@ public class BallControl : MonoBehaviour
     [Tooltip("How fast upwards the ball is allowed to move.")]
     public float yVelocityLimit = 10;
 
+    public int numPutts = 0;
+    public int numDeaths = 0;
+
     List<GameObject> colliders = new List<GameObject>();
 
     [Tooltip("The farthest down the ball can fall before resetting.")]
@@ -59,6 +65,9 @@ public class BallControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         respawnPosition = transform.position;
         pauseMenuScript = pauseManager.GetComponent<PauseMenu>();
+
+        controller = GameObject.FindGameObjectWithTag("GameController");
+        controllerScript = controller.GetComponent<Controller>();
     }
 
     // Update is called once per frame
@@ -88,6 +97,7 @@ public class BallControl : MonoBehaviour
         if(transform.position.y < minY)
         {
             ResetBall();
+            numDeaths += 1;
         }
     }
 
@@ -164,13 +174,14 @@ public class BallControl : MonoBehaviour
         // If we push the analog stick half way, it should be around mangitude 0.5,
         // or 50% force.
         if(colliders.Count == 0) { return; }//can't putt if not on the ground
-        if (Input.GetButtonDown("P1_A"))
+        if ((Input.GetButtonDown("P1_A") && controllerScript.p1_isXbox) || (Input.GetButtonDown("P1_B") && !controllerScript.p1_isXbox))
         {
             float force = puttMaxForce * aimDirection.magnitude;
             rb.velocity = new Vector3(0, 0, 0);
             // We can add force in the direction of our pivotpoint's forward, because
             // we are rotating it based on the aim input every frame.
             rb.AddForce(pivotPoint.transform.forward * force, ForceMode.Impulse);
+            numPutts += 1;
 
             if(force < puttMaxForce * .6)
             {
