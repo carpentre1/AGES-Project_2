@@ -46,6 +46,13 @@ public class BallControl : MonoBehaviour
     public AudioSource SFX_golf2;
     public AudioSource SFX_golf3;
     public AudioSource SFX_whoosh;
+    public AudioSource SFX_rolling;
+    public AudioSource SFX_bounce;
+
+    float bounceDelay = .2f;
+    bool bouncedRecently = false;
+
+    float velocityNormalization = .04f;
 
     [Tooltip("How fast upwards the ball is allowed to move.")]
     public float yVelocityLimit = 10;
@@ -82,6 +89,35 @@ public class BallControl : MonoBehaviour
         GetAimInput();
         UpdateAimIndicator();
         Putt();
+
+        if (rb.velocity.magnitude > .2f && colliders.Count > 0)
+        {
+            if(!SFX_rolling.isPlaying)
+            {
+                SFX_rolling.Play();
+            }
+            else
+            {
+                SFX_rolling.UnPause();
+                SFX_rolling.volume = Mathf.Min(.8f, rb.velocity.magnitude*velocityNormalization);
+            }
+        }
+        else
+        {
+            SFX_rolling.Pause();
+        }
+    }
+
+    IEnumerator BounceMuted()
+    {
+        bouncedRecently = true;
+        float deltaTime = 0;
+        while(deltaTime < bounceDelay)
+        {
+            deltaTime += .1f;
+            yield return new WaitForSeconds(.1f);
+        }
+        bouncedRecently = false;
     }
 
     private void LimitVelocity()
@@ -120,6 +156,14 @@ public class BallControl : MonoBehaviour
     {
         if(collision.gameObject.tag == "Ground")
         {
+            float velocityUp = Vector3.Dot(rb.velocity, Vector3.up);
+            if(!bouncedRecently)
+            {
+                SFX_bounce.pitch = UnityEngine.Random.Range(.8f, 1.2f);
+                SFX_bounce.volume = (rb.velocity.magnitude * velocityNormalization) + .2f;
+                SFX_bounce.Play();
+                StartCoroutine(BounceMuted());
+            }
             colliders.Add(collision.gameObject);
         }
     }

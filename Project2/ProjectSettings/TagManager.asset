@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - LevelManager
   - LevelSelect
+  - title
+  - SFX
   layers:
   - Default
   - TransparentFX

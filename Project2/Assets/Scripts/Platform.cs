@@ -9,10 +9,15 @@ public class Platform : MonoBehaviour
     public float backSpeedMult = .5f;
     public float maxSpeed = 2;
     float yPos;
+    float originalX;
+    float deltaX = 0;
     bool movingForwards = true;
 
     GameObject golfBall;
     BallControl golfBallScript;
+
+    GameObject SFX;
+    AudioScript SFXScript;
 
     CharacterController cc;
     Rigidbody rb;
@@ -25,13 +30,17 @@ public class Platform : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        originalX = transform.position.x;
+
         controller = GameObject.FindGameObjectWithTag("GameController");
         controllerScript = controller.GetComponent<Controller>();
 
         golfBall = GameObject.FindGameObjectWithTag("Player");
         golfBallScript = golfBall.GetComponent<BallControl>();
 
-        //cc = GetComponent<CharacterController>();
+        SFX = GameObject.FindGameObjectWithTag("SFX");
+        SFXScript = SFX.GetComponent<AudioScript>();
+
         rb = GetComponent<Rigidbody>();
         yPos = transform.position.y;
     }
@@ -57,14 +66,12 @@ public class Platform : MonoBehaviour
     {
         var localVel = transform.InverseTransformDirection(rb.velocity);
         rb.AddForce(transform.forward * speed, ForceMode.Impulse);
-        //rb.velocity = transform.forward * speed;
         transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
     }
     void MoveBackward()
     {
         var localVel = transform.InverseTransformDirection(rb.velocity);
         rb.AddForce(-transform.forward * speed * backSpeedMult, ForceMode.Impulse);
-        //rb.velocity = -transform.forward * speed;
         transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
     }
 }

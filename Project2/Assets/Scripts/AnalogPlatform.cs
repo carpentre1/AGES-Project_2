@@ -12,6 +12,9 @@ public class AnalogPlatform : MonoBehaviour {
     GameObject controller;
     Controller controllerScript;
 
+    GameObject SFX;
+    AudioScript SFXScript;
+
     Color originalColor;
 
     public float level = 0;
@@ -30,6 +33,9 @@ public class AnalogPlatform : MonoBehaviour {
 
         controller = GameObject.FindGameObjectWithTag("GameController");
         controllerScript = controller.GetComponent<Controller>();
+
+        SFX = GameObject.FindGameObjectWithTag("SFX");
+        SFXScript = SFX.GetComponent<AudioScript>();
 
         golfBall = GameObject.FindGameObjectWithTag("Player");
         golfBallScript = golfBall.GetComponent<BallControl>();
@@ -57,6 +63,14 @@ public class AnalogPlatform : MonoBehaviour {
         //float step = speed * Time.deltaTime;
         //Vector3 newLoc = new Vector3(originalPos.x + controllerScript.rightAnalogX * boundaryCube.transform.localScale.x / 2, originalPos.y, originalPos.z + controllerScript.rightAnalogY * boundaryCube.transform.localScale.z / 2);
         //transform.position = Vector3.MoveTowards(transform.position, newLoc, step);
+        if(deltaX != currentX || deltaZ != currentZ)
+        {
+            //SFXScript.PlayContinuousAudio(SFXScript.grayPlatform);
+        }
+        else
+        {
+            //SFXScript.PauseContinuousAudio(SFXScript.grayPlatform);
+        }
         currentX = controllerScript.rightAnalogX;
         currentZ = controllerScript.rightAnalogY;
     }
