@@ -49,7 +49,10 @@ public class Title : MonoBehaviour {
             audioSlider.value -= .01f;
         }
     }
-
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
     public void OnValueChanged()
     {
         AudioListener.volume = audioSlider.value;
