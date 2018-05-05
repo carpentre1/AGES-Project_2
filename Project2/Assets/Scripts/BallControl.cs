@@ -19,7 +19,7 @@ public class BallControl : MonoBehaviour
     // work how I'd expect. Manually handling it gives results I understand.
     [Tooltip("Ignore analog stick input below this threshold.")]
     [SerializeField]
-    private float deadzone = 0.1f;
+    private float deadzone = .5f;
 
     [Tooltip("Fully extending the analog stick will achieve max force.")]
     [SerializeField]
